@@ -1,0 +1,6 @@
+export enum Role {
+  DIRECTOR = 'DIRECTOR',
+  HEAD_DIVISION = 'HEAD_DIVISION',
+  USER = 'USER',
+  STAFF = 'STAFF',
+}

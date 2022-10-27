@@ -1,0 +1,29 @@
+###
+GET http://localhost:3000
+
+###
+GET http://localhost:3000/health
+
+###
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+    "name": "yazid",
+    "username": "yazid10",
+    "password": "123",
+    "role": "STAFF"
+}
+
+###
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "username": "yazid",
+    "password": "123"
+}
+
+###
+GET http://localhost:3000/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjlhZWU3MGVlLWNkMzEtNDBhNC1iNTYwLTQ0MzQyZjVhZTQwYSIsImlhdCI6MTY2Njg5NTgzMCwiZXhwIjoxNjY2ODk1ODkwfQ.G7lM3g5zKaJcNMrEeuWh2bdkQl14_LMUPzhHL3O0u8k
