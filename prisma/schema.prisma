@@ -12,37 +12,43 @@ model User {
   name      String   @db.VarChar(255)
   username  String   @unique @db.VarChar(100)
   password  String   @db.VarChar(150)
-  role      Role     @relation(fields: [roleId], references: [id])
   roleId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+
+  role Role @relation(fields: [roleId], references: [id])
 }
 
 model Role {
-  id    String @id @default(uuid())
-  name  String @unique @db.VarChar(50)
+  id   String @id @default(uuid())
+  name String @unique @db.VarChar(50)
+
   users User[]
+  apis  Api[]
 }
 
 model Category {
   id   String @id @default(uuid())
   name String @unique @db.VarChar(50)
+
   apis Api[]
 }
 
 model Api {
-  id         String     @id @default(uuid())
-  url        String     @db.VarChar(255)
-  author     String?    @db.VarChar(150)
-  description String? @db.VarChar(255)
-  status     StatusAPI  @default(aktif)
+  id          String    @id @default(uuid())
+  url         String    @db.VarChar(255)
+  author      String?   @db.VarChar(150)
+  description String?   @db.VarChar(255)
+  status      StatusAPI @default(AKTIF)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now())
+  deletedAt   DateTime?
+
   categories Category[]
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @default(now())
-  deletedAt  DateTime?
+  roles      Role[]
 }
 
 enum StatusAPI {
-  aktif
-  tidakAktif
+  AKTIF
+  TIDAK_AKTIF
 }

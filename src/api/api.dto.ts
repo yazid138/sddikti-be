@@ -8,8 +8,8 @@ import {
 } from 'class-validator';
 
 enum StatusApi {
-  aktif = 'aktif',
-  tidakAktif = 'tidakAktif',
+  AKTIF = 'AKTIF',
+  TIDAK_AKTIF = 'TIDAK_AKTIF',
 }
 
 export class AddApiDto {

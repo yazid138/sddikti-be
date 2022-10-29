@@ -1,5 +1,13 @@
 import { CategoryService } from './../category/category.service';
-import { Body, Controller, Param, Post, Put, Get } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Param,
+  Post,
+  Put,
+  Get,
+  ParseUUIDPipe,
+} from '@nestjs/common';
 import { ApiService } from './api.service';
 import { AddApiDto, UpdateApiDto } from './api.dto';
 import { Prisma } from '@prisma/client';
@@ -36,7 +44,10 @@ export class ApiController {
   }
 
   @Put('update/:id')
-  async updateAPI(@Param('id') id, @Body() apiDto: UpdateApiDto) {
+  async updateAPI(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() apiDto: UpdateApiDto,
+  ) {
     const data: Prisma.ApiUpdateInput = {
       url: apiDto.url,
       author: apiDto.author,

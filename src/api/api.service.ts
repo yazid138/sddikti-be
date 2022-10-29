@@ -33,6 +33,7 @@ export class ApiService {
     where: Prisma.ApiWhereUniqueInput,
     data: Prisma.ApiUpdateInput,
   ): Promise<Api> {
+    data.updatedAt = new Date();
     return await this.prismaService.api.update({
       where,
       data,

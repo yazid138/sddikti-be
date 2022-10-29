@@ -8,6 +8,7 @@ import { ResponseTransformInterceptor } from './common/interceptors/response-tra
 // import * as csurf from 'csurf';
 import * as cookieParser from 'cookie-parser';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { PrismaExceptionFilter } from './common/filters/prisma-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -46,7 +47,7 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ResponseTransformInterceptor());
 
   // Global Filters
-  app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalFilters(new HttpExceptionFilter(), new PrismaExceptionFilter());
 
   await app.listen(parseInt(configService.get('PORT', '3000'), 10));
   logger.verbose(`Application is running on: ${await app.getUrl()}`);

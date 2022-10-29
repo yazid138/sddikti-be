@@ -26,7 +26,7 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3000/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY1MjZkMTAyLWNjNmUtNDM5NC1hMTQ4LWM5YzVhYTQ3NWU1MCIsIm5hbWUiOiJ5YXppZCIsInVzZXJuYW1lIjoieWF6aWQiLCJwYXNzd29yZCI6IiQyYiQxMCREOWhjUU9YTlZRRGpwVXFVaXJUSUVlWURERy9KTTZmLnRFRG9XTTVMU09nOEsuYUVUbUlsZSIsInJvbGVJZCI6ImQxYjg3OWQ0LTM1NWQtNGYzZi04NmU3LTE4NzVjYTYyY2I5NyIsImNyZWF0ZWRBdCI6IjIwMjItMTAtMjlUMDU6MTE6MjIuMjE3WiIsInVwZGF0ZWRBdCI6IjIwMjItMTAtMjlUMDU6MTE6MjIuMjE3WiIsInJvbGUiOnsiaWQiOiJkMWI4NzlkNC0zNTVkLTRmM2YtODZlNy0xODc1Y2E2MmNiOTciLCJuYW1lIjoiYWRtaW4ifSwiaWF0IjoxNjY3MDIwMjg4LCJleHAiOjE2NjcwMjAzNDh9.RA2xIdJhG8u_IEXckSpnIXiAnASuHPeM7VBZB17VG8s
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJiN2Y0ZjJhLTI2ODYtNDgyNS05Zjk3LTFkNzI5ZGM1ZGI5YiIsImlhdCI6MTY2NzA0MDM5NCwiZXhwIjoxNjY3MDQwNDU0fQ.LiCycOJWdZxO7-AqRBQb5HOOkJdDn2ok25o19nI7sdA
 
 ###
 GET http://localhost:3000/role
@@ -40,16 +40,18 @@ Content-Type: application/json
 
 {
     "url": "https://haloyazid.com",
-    "author": 1,
+    "author": "Yazid",
+    "description": "ini adalah deskripsi api",
     "categories": ["pendidikan", "API", "Test", "TEST2", "AAA"]
 }
 
 ###
-PUT  http://localhost:3000/api-manager/update/b84e6436-6dc3-4c8c-a0c3-a165f3edde41
+PUT  http://localhost:3000/api-manager/update/64f8964d-f16b-4c17-b121-d91ddc823a30
 Content-Type: application/json
 
 {
-    "status": "tidakAktif",
+    "url": "http://google.com",
+    "status": "TIDAK_AKTIF",
     "author": "orang",
     "categories": ["test", "pendidikan"]
 }

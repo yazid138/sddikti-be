@@ -16,7 +16,7 @@ export class UserService {
 
   async createUser(data: Prisma.UserCreateInput): Promise<User> {
     data.password = await this.hashPassword(data.password);
-    return this.prisma.user.create({
+    return await this.prisma.user.create({
       data,
       include: { role: true },
     });
