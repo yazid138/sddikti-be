@@ -34,6 +34,7 @@ model Api {
   id         String     @id @default(uuid())
   url        String     @db.VarChar(255)
   author     String?    @db.VarChar(150)
+  description String? @db.VarChar(255)
   status     StatusAPI  @default(aktif)
   categories Category[]
   createdAt  DateTime   @default(now())

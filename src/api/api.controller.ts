@@ -26,6 +26,7 @@ export class ApiController {
     const data = await this.apiService.addAPI({
       url: apiDto.url,
       author: apiDto.author,
+      description: apiDto.description,
       categories: {
         connect: categories.map((e) => ({ id: e.id })),
       },
@@ -40,6 +41,7 @@ export class ApiController {
       url: apiDto.url,
       author: apiDto.author,
       status: apiDto.status,
+      description: apiDto.description,
     };
 
     if (apiDto.categories) {

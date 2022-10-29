@@ -19,7 +19,11 @@ export class AddApiDto {
 
   @IsOptional()
   @IsString()
-  author: string;
+  author?: string;
+
+  @IsOptional()
+  @IsString()
+  description?: string;
 
   @IsNotEmpty()
   @IsArray()
@@ -34,6 +38,10 @@ export class UpdateApiDto {
   @IsOptional()
   @IsString()
   author?: string;
+
+  @IsOptional()
+  @IsString()
+  description?: string;
 
   @IsOptional()
   @IsEnum(StatusApi)
