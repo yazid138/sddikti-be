@@ -40,7 +40,7 @@ Content-Type: application/json
 
 {
     "url": "https://haloyazid.com",
-    "author": "yazid",
+    "author": 1,
     "categories": ["pendidikan", "API", "Test", "TEST2", "AAA"]
 }
 

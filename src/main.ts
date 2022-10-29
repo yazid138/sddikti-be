@@ -7,6 +7,7 @@ import helmet from 'helmet';
 import { ResponseTransformInterceptor } from './common/interceptors/response-transform.interceptor';
 // import * as csurf from 'csurf';
 import * as cookieParser from 'cookie-parser';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -43,6 +44,9 @@ async function bootstrap() {
 
   // Global Interceptors
   app.useGlobalInterceptors(new ResponseTransformInterceptor());
+
+  // Global Filters
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   await app.listen(parseInt(configService.get('PORT', '3000'), 10));
   logger.verbose(`Application is running on: ${await app.getUrl()}`);
