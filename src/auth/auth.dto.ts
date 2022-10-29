@@ -1,5 +1,13 @@
 import { IsNotEmpty, IsEnum } from 'class-validator';
-import { Role } from '../utils/constants';
+// import { Role } from '../utils/constants';
+
+export enum Role {
+  ADMIN = 'ADMIN',
+  DIRECTOR = 'DIRECTOR',
+  HEAD_DIVISION = 'HEAD_DIVISION',
+  STAFF = 'STAFF',
+  USER = 'USER',
+}
 
 export class UserRegisterDTO {
   @IsNotEmpty()

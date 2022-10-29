@@ -6,6 +6,9 @@ import { HttpModule } from '@nestjs/axios';
 import { configValidationSchema } from './config/config.schema';
 import { TerminusModule } from '@nestjs/terminus';
 import { UserModule } from './user/user.module';
+import { RoleModule } from './role/role.module';
+import { CategoryModule } from './category/category.module';
+import { ApiModule } from './api/api.module';
 
 @Module({
   imports: [
@@ -16,6 +19,9 @@ import { UserModule } from './user/user.module';
     TerminusModule,
     AuthModule,
     UserModule,
+    RoleModule,
+    CategoryModule,
+    ApiModule,
   ],
   controllers: [AppController],
   providers: [],

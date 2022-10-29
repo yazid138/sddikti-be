@@ -10,9 +10,9 @@ Content-Type: application/json
 
 {
     "name": "yazid",
-    "username": "yazid10",
+    "username": "yazid",
     "password": "123",
-    "role": "STAFF"
+    "role": "d1b879d4-355d-4f3f-86e7-1875ca62cb97"
 }
 
 ###
@@ -26,4 +26,30 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3000/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjlhZWU3MGVlLWNkMzEtNDBhNC1iNTYwLTQ0MzQyZjVhZTQwYSIsImlhdCI6MTY2Njg5NTgzMCwiZXhwIjoxNjY2ODk1ODkwfQ.G7lM3g5zKaJcNMrEeuWh2bdkQl14_LMUPzhHL3O0u8k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY1MjZkMTAyLWNjNmUtNDM5NC1hMTQ4LWM5YzVhYTQ3NWU1MCIsIm5hbWUiOiJ5YXppZCIsInVzZXJuYW1lIjoieWF6aWQiLCJwYXNzd29yZCI6IiQyYiQxMCREOWhjUU9YTlZRRGpwVXFVaXJUSUVlWURERy9KTTZmLnRFRG9XTTVMU09nOEsuYUVUbUlsZSIsInJvbGVJZCI6ImQxYjg3OWQ0LTM1NWQtNGYzZi04NmU3LTE4NzVjYTYyY2I5NyIsImNyZWF0ZWRBdCI6IjIwMjItMTAtMjlUMDU6MTE6MjIuMjE3WiIsInVwZGF0ZWRBdCI6IjIwMjItMTAtMjlUMDU6MTE6MjIuMjE3WiIsInJvbGUiOnsiaWQiOiJkMWI4NzlkNC0zNTVkLTRmM2YtODZlNy0xODc1Y2E2MmNiOTciLCJuYW1lIjoiYWRtaW4ifSwiaWF0IjoxNjY3MDIwMjg4LCJleHAiOjE2NjcwMjAzNDh9.RA2xIdJhG8u_IEXckSpnIXiAnASuHPeM7VBZB17VG8s
+
+###
+GET http://localhost:3000/role
+
+###
+GET http://localhost:3000/api-manager
+
+###
+POST http://localhost:3000/api-manager/add
+Content-Type: application/json
+
+{
+    "url": "https://haloyazid.com",
+    "author": "yazid",
+    "categories": ["pendidikan", "API", "Test", "TEST2", "AAA"]
+}
+
+###
+PUT  http://localhost:3000/api-manager/update/b84e6436-6dc3-4c8c-a0c3-a165f3edde41
+Content-Type: application/json
+
+{
+    "status": "tidakAktif",
+    "author": "orang",
+    "categories": ["test", "pendidikan"]
+}

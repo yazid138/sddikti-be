@@ -23,10 +23,12 @@ export class ResponseTransformInterceptor<T>
     next: CallHandler,
   ): Observable<Response<T>> {
     const ctx = context.switchToHttp();
+    const res = ctx.getResponse<Res>();
     return next.handle().pipe(
       map((response) => {
+        res.status(response?.code || 200);
         return {
-          code: response?.code || ctx.getResponse<Res>().statusCode,
+          code: response?.code || 200,
           message: response?.message,
           data: response?.data || response,
         };
