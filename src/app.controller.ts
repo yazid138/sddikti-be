@@ -75,8 +75,14 @@ export class AppController {
   @Post('login')
   async login(@Req() req: Request & { user: User }, @Res() res: Response) {
     const token: string = await this.authService.getJwtToken(req.user);
+    const now = new Date();
+    const time = now.getTime();
+    now.setTime(time + 24 * 60 * 60 * 1000);
     res
-      .cookie('auth-cookie', token, { httpOnly: true })
+      .cookie('auth-cookie', token, {
+        httpOnly: true,
+        expires: now,
+      })
       .json({ code: 200, message: 'Berhasil login', data: { token } });
   }
 

@@ -25,6 +25,9 @@ Content-Type: application/json
 }
 
 ###
+DELETE http://localhost:3000/logout
+
+###
 GET http://localhost:3000/me
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE0NjcyMWVhLTQwNjAtNDU4OC1hNjE4LWU5Y2M1NWIzZTA4ZCIsImlhdCI6MTY2NzE4OTI3NCwiZXhwIjoxNjY3MTg5MzM0fQ.-tC-94EtHCZiq9BLjHBSP3am73enAgJfYll2eDaD7Zk
 
