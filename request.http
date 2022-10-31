@@ -29,7 +29,6 @@ DELETE http://localhost:3000/logout
 
 ###
 GET http://localhost:3000/me
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE0NjcyMWVhLTQwNjAtNDU4OC1hNjE4LWU5Y2M1NWIzZTA4ZCIsImlhdCI6MTY2NzE4OTI3NCwiZXhwIjoxNjY3MTg5MzM0fQ.-tC-94EtHCZiq9BLjHBSP3am73enAgJfYll2eDaD7Zk
 
 ###
 GET http://localhost:3000/role
@@ -42,11 +41,11 @@ POST http://localhost:3000/api-manager/add
 Content-Type: application/json
 
 {
-    "name": "google",
+    "name": "google 1",
     "url": "https://haloyazid.com",
     "author": "Yazid",
     "description": "ini adalah deskripsi api",
-    "categories": ["pendidikan", "API", "Test", "TEST2", "AAA"]
+    "categories": ["google"]
 }
 
 ###
@@ -61,4 +60,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3000/api-manager/delete/c4a3361d-849e-45c2-9c55-467e59a35afb
+DELETE http://localhost:3000/api-manager/delete/a7032208-f005-4e9e-bc92-081d04f40d6b

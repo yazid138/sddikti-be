@@ -16,10 +16,10 @@ export class ApiNameExists implements ValidatorConstraintInterface {
 
   async validate(value: string) {
     if (value) {
-      const api = await this.apiService.detailApi({
+      const api = await this.apiService.listApi({
         name: slug(value),
       });
-      return !api;
+      return !api.length;
     }
     return true;
   }
