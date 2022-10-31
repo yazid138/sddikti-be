@@ -10,7 +10,7 @@ export class RoleService {
     return await this.prisma.role.findUnique({ where });
   }
 
-  async getRole(where?: Prisma.RoleWhereUniqueInput): Promise<Role[]> {
+  async getRole(where?: Prisma.RoleWhereInput): Promise<Role[]> {
     return await this.prisma.role.findMany({ where });
   }
 }

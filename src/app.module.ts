@@ -11,8 +11,6 @@ import { CategoryModule } from './category/category.module';
 import { ApiModule } from './api/api.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { UserExistsValidator } from './common/validation/user-exists-validator';
-import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from './auth/guard/roles.guard';
 
 @Module({
   imports: [

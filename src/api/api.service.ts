@@ -40,4 +40,10 @@ export class ApiService {
       include: { categories: true },
     });
   }
+
+  async deleteApi(where: Prisma.ApiWhereUniqueInput): Promise<Api> {
+    return await this.prismaService.api.delete({
+      where,
+    });
+  }
 }

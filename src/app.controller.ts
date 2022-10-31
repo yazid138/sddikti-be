@@ -2,9 +2,11 @@ import {
   Controller,
   Get,
   Post,
+  Delete,
   Body,
   UseGuards,
-  Request,
+  Req,
+  Res,
 } from '@nestjs/common';
 import {
   HealthCheck,
@@ -20,6 +22,8 @@ import { UserRegisterDTO } from './auth/auth.dto';
 import { User } from '@prisma/client';
 import { RoleService } from './role/role.service';
 import { exclude } from './utils/functions';
+import { Request, Response } from 'express';
+import { Role } from './utils/constants';
 
 @Controller()
 export class AppController {
@@ -69,16 +73,24 @@ export class AppController {
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  login(@Request() req) {
-    return {
-      data: this.authService.login(req.user),
-      message: 'Berhasil login',
-    };
+  async login(@Req() req: Request & { user: User }, @Res() res: Response) {
+    const token: string = await this.authService.getJwtToken(req.user);
+    res
+      .cookie('auth-cookie', token, { httpOnly: true })
+      .json({ code: 200, message: 'Berhasil login', data: { token } });
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('logout')
+  async logout(@Res() res: Response) {
+    res
+      .cookie('auth-cookie', '', { expires: new Date() })
+      .json({ code: 200, message: 'Berhasil logout' });
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('me')
-  getProfile(@Request() req) {
+  getProfile(@Req() req: Request & { user: User }) {
     const user: User = req.user;
     return {
       data: exclude(user, 'password', 'roleId'),
@@ -88,7 +100,11 @@ export class AppController {
 
   @Get('role')
   async getRole() {
-    const data = await this.roleService.getRole();
+    const data = await this.roleService.getRole({
+      NOT: {
+        id: Role.ADMIN,
+      },
+    });
     return { data, message: 'berhasil mendapatkan data role' };
   }
 }

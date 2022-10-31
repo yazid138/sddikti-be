@@ -6,6 +6,7 @@ import {
   Post,
   Put,
   Get,
+  Delete,
   ParseUUIDPipe,
   UseGuards,
 } from '@nestjs/common';
@@ -16,6 +17,7 @@ import { Roles } from 'src/auth/decorator/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
 import { Role } from 'src/utils/constants';
+import { exclude } from 'src/utils/functions';
 
 @Controller('api-manager')
 export class ApiController {
@@ -26,8 +28,10 @@ export class ApiController {
 
   @Get()
   async getListApi() {
-    const data = await this.apiService.listApi();
-    return { data, message: 'Berhasil mengambil data Api' };
+    return {
+      data: await this.apiService.listApi(),
+      message: 'Berhasil mengambil data Api',
+    };
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -73,8 +77,17 @@ export class ApiController {
       };
     }
 
-    const api = await this.apiService.updateAPI({ id }, data);
+    return {
+      message: 'Berhasil mengubah Api',
+      data: await this.apiService.updateAPI({ id }, data),
+    };
+  }
 
-    return { message: 'Berhasil mengubah Api', data: api };
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  @Delete('delete/:id')
+  async deleteApi(@Param('id', ParseUUIDPipe) id: string) {
+    await this.apiService.deleteApi({ id });
+    return { message: 'Berhasil menghapus Api' };
   }
 }

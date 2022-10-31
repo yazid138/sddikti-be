@@ -27,6 +27,11 @@ export class AuthService {
     };
   }
 
+  async getJwtToken(user: User): Promise<string> {
+    const payload = { id: user.id };
+    return await this.jwtService.signAsync(payload);
+  }
+
   private async comparePassword(pass: string, hash: string): Promise<boolean> {
     return await bcrypt.compare(pass, hash);
   }
