@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import { ConfigService } from '@nestjs/config';
 import { User } from '@prisma/client';
-import { Request as RequestType } from 'express';
+import { Request } from 'express';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -22,7 +22,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  private static extractJWT(req: RequestType): string | null {
+  private static extractJWT(req: Request): string | null {
     if (req.cookies && req.cookies['auth-cookie']) {
       return req.cookies['auth-cookie'];
     }

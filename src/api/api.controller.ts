@@ -17,7 +17,6 @@ import { Roles } from 'src/auth/decorator/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
 import { Role } from 'src/utils/constants';
-import { exclude } from 'src/utils/functions';
 
 @Controller('api-manager')
 export class ApiController {
@@ -31,6 +30,14 @@ export class ApiController {
     return {
       data: await this.apiService.listApi(),
       message: 'Berhasil mengambil data Api',
+    };
+  }
+
+  @Get(':id')
+  async getDetailApi(@Param('id', ParseUUIDPipe) id: string) {
+    return {
+      data: await this.apiService.detailApi({ id }),
+      message: 'Berhasil mengambil detail data Api',
     };
   }
 
