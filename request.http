@@ -10,9 +10,9 @@ Content-Type: application/json
 
 {
     "name": "yazid",
-    "username": "yazid",
+    "username": "yazid1",
     "password": "123",
-    "role": "d1b879d4-355d-4f3f-86e7-1875ca62cb97"
+    "role": "09bd8bf8-1e18-4b5b-8512-421ce45ff18e"
 }
 
 ###
@@ -20,13 +20,13 @@ POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-    "username": "yazid",
+    "username": "yazid1",
     "password": "123"
 }
 
 ###
 GET http://localhost:3000/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJiN2Y0ZjJhLTI2ODYtNDgyNS05Zjk3LTFkNzI5ZGM1ZGI5YiIsImlhdCI6MTY2NzA0MDM5NCwiZXhwIjoxNjY3MDQwNDU0fQ.LiCycOJWdZxO7-AqRBQb5HOOkJdDn2ok25o19nI7sdA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE0NjcyMWVhLTQwNjAtNDU4OC1hNjE4LWU5Y2M1NWIzZTA4ZCIsImlhdCI6MTY2NzE4OTI3NCwiZXhwIjoxNjY3MTg5MzM0fQ.-tC-94EtHCZiq9BLjHBSP3am73enAgJfYll2eDaD7Zk
 
 ###
 GET http://localhost:3000/role
@@ -37,6 +37,7 @@ GET http://localhost:3000/api-manager
 ###
 POST http://localhost:3000/api-manager/add
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE0NjcyMWVhLTQwNjAtNDU4OC1hNjE4LWU5Y2M1NWIzZTA4ZCIsImlhdCI6MTY2NzE4OTMxOSwiZXhwIjoxNjY3MTg5Mzc5fQ.DWaq6f2pc0PypITJFow-Do6pVI9G1YlhvpMmtUIgwn0
 
 {
     "url": "https://haloyazid.com",

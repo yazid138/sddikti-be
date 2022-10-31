@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsEnum } from 'class-validator';
+import { IsExistsUser } from 'src/common/validation/user-exists-validator';
 import { Role } from '../utils/constants';
 
 export class UserRegisterDTO {
@@ -6,6 +7,7 @@ export class UserRegisterDTO {
   name: string;
 
   @IsNotEmpty()
+  @IsExistsUser(['username'])
   username: string;
 
   @IsNotEmpty()
