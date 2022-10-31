@@ -33,14 +33,15 @@ CREATE TABLE `Category` (
 -- CreateTable
 CREATE TABLE `Api` (
     `id` VARCHAR(191) NOT NULL,
+    `name` VARCHAR(150) NOT NULL,
     `url` VARCHAR(255) NOT NULL,
     `author` VARCHAR(150) NULL,
     `description` VARCHAR(255) NULL,
     `status` ENUM('AKTIF', 'TIDAK_AKTIF') NOT NULL DEFAULT 'AKTIF',
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `deletedAt` DATETIME(3) NULL,
 
+    UNIQUE INDEX `Api_name_key`(`name`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

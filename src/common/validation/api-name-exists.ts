@@ -6,22 +6,20 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
-import { UserService } from 'src/user/user.service';
+import * as slug from 'slug';
+import { ApiService } from 'src/api/api.service';
 
 @ValidatorConstraint({ async: true })
 @Injectable()
-export class UserExistsValidator implements ValidatorConstraintInterface {
-  constructor(protected readonly userService: UserService) {}
+export class ApiNameExists implements ValidatorConstraintInterface {
+  constructor(private readonly apiService: ApiService) {}
 
-  async validate(
-    value: string,
-    validationArguments?: ValidationArguments,
-  ): Promise<boolean> {
+  async validate(value: string) {
     if (value) {
-      const user = await this.userService.user({
-        [validationArguments.constraints[0]]: value,
+      const api = await this.apiService.detailApi({
+        name: slug(value),
       });
-      return !user;
+      return !api;
     }
     return true;
   }
@@ -31,18 +29,15 @@ export class UserExistsValidator implements ValidatorConstraintInterface {
   }
 }
 
-export function IsUserExists(
-  option: string[],
-  validationOption?: ValidationOptions,
-) {
+export function IsNameApiExists(validationOption?: ValidationOptions) {
   return function (object: any, propertyName: string) {
     registerDecorator({
-      name: 'IsUserExist',
+      name: 'IsNameApiExist',
       target: object.constructor,
+      constraints: [],
       propertyName,
-      constraints: option,
       options: validationOption,
-      validator: UserExistsValidator,
+      validator: ApiNameExists,
       async: true,
     });
   };

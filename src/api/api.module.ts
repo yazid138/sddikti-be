@@ -8,5 +8,6 @@ import { ApiController } from './api.controller';
   imports: [PrismaModule, CategoryModule],
   providers: [ApiService],
   controllers: [ApiController],
+  exports: [ApiService],
 })
 export class ApiModule {}

@@ -36,13 +36,13 @@ model Category {
 
 model Api {
   id          String    @id @default(uuid())
+  name        String    @unique @db.VarChar(150)
   url         String    @db.VarChar(255)
   author      String?   @db.VarChar(150)
   description String?   @db.VarChar(255)
   status      StatusAPI @default(AKTIF)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @default(now())
-  deletedAt   DateTime?
 
   categories Category[]
   roles      Role[]

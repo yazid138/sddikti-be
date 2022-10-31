@@ -6,7 +6,7 @@ import { PrismaApiMiddleware } from './ApiMiddleware';
 export class PrismaService extends PrismaClient implements OnModuleInit {
   async onModuleInit() {
     await this.$connect();
-    PrismaApiMiddleware(this);
+    // PrismaApiMiddleware(this);
   }
 
   async enableShutdownHooks(app: INestApplication) {

@@ -11,6 +11,7 @@ import { CategoryModule } from './category/category.module';
 import { ApiModule } from './api/api.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { UserExistsValidator } from './common/validation/user-exists-validator';
+import { ApiNameExists } from './common/validation/api-name-exists';
 
 @Module({
   imports: [
@@ -27,6 +28,6 @@ import { UserExistsValidator } from './common/validation/user-exists-validator';
     ApiModule,
   ],
   controllers: [AppController],
-  providers: [UserExistsValidator],
+  providers: [UserExistsValidator, ApiNameExists],
 })
 export class AppModule {}

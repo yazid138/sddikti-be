@@ -23,13 +23,6 @@ export class PrismaExceptionFilter implements ExceptionFilter {
         message: 'Error! Data tidak ada',
       };
     }
-    if (exception.code === 'P2002') {
-      responseData = {
-        ...responseData,
-        code: 400,
-        message: 'harus nya masuk ke validasi pengecekan yg unique',
-      };
-    }
 
     response.status(responseData.code).json(responseData);
   }

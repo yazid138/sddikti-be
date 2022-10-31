@@ -17,6 +17,7 @@ import { Roles } from 'src/auth/decorator/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
 import { Role } from 'src/utils/constants';
+import * as slug from 'slug';
 
 @Controller('api-manager')
 export class ApiController {
@@ -50,6 +51,7 @@ export class ApiController {
     );
 
     const data = await this.apiService.addAPI({
+      name: slug(apiDto.name),
       url: apiDto.url,
       author: apiDto.author,
       description: apiDto.description,
@@ -69,6 +71,7 @@ export class ApiController {
     @Body() apiDto: UpdateApiDto,
   ) {
     const data: Prisma.ApiUpdateInput = {
+      name: slug(apiDto.name),
       url: apiDto.url,
       author: apiDto.author,
       status: apiDto.status,

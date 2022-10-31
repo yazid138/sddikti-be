@@ -6,6 +6,7 @@ import {
   IsString,
   IsUrl,
 } from 'class-validator';
+import { IsNameApiExists } from 'src/common/validation/api-name-exists';
 
 enum StatusApi {
   AKTIF = 'AKTIF',
@@ -13,6 +14,11 @@ enum StatusApi {
 }
 
 export class AddApiDto {
+  @IsNotEmpty()
+  @IsString()
+  @IsNameApiExists()
+  name: string;
+
   @IsNotEmpty()
   @IsUrl()
   url: string;
@@ -31,6 +37,11 @@ export class AddApiDto {
 }
 
 export class UpdateApiDto {
+  @IsOptional()
+  @IsString()
+  @IsNameApiExists()
+  name?: string;
+
   @IsOptional()
   @IsUrl()
   url?: string;
