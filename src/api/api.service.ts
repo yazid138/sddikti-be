@@ -37,7 +37,6 @@ export class ApiService {
     return await this.prismaService.api.update({
       where,
       data,
-      include: { categories: true },
     });
   }
 
