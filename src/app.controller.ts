@@ -12,6 +12,7 @@ import {
   HealthCheck,
   HealthCheckService,
   MemoryHealthIndicator,
+  HttpHealthIndicator,
 } from '@nestjs/terminus';
 import { ConfigService } from '@nestjs/config';
 import { AuthService } from './auth/auth.service';
@@ -30,6 +31,7 @@ export class AppController {
   constructor(
     private health: HealthCheckService,
     private memory: MemoryHealthIndicator,
+    private http: HttpHealthIndicator,
     private configService: ConfigService,
     private readonly userService: UserService,
     private readonly authService: AuthService,
@@ -52,6 +54,7 @@ export class AppController {
     return this.health.check([
       () => this.memory.checkHeap('memory_heap', 200 * 1024 * 1024),
       () => this.memory.checkRSS('memory_rss', 3000 * 1024 * 1024),
+      () => this.http.pingCheck('localhost', 'http://localhost:3000'),
     ]);
   }
 
@@ -83,7 +86,7 @@ export class AppController {
         httpOnly: true,
         expires: now,
       })
-      .json({ code: 200, message: 'Berhasil login', data: { token } });
+      .json({ code: 200, message: 'Berhasil login' });
   }
 
   @UseGuards(JwtAuthGuard)
