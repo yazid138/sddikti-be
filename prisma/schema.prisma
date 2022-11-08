@@ -34,6 +34,33 @@ model Category {
   apis Api[]
 }
 
+model Query {
+  id    String @id @default(uuid())
+  apiId String
+  name  String @db.VarChar(100)
+  type  String
+
+  api Api @relation(fields: [apiId], references: [id])
+}
+
+model AuthApiData {
+  id        String @id @default(uuid())
+  authApiId String
+  name      String @db.VarChar(100)
+  value     String
+
+  auth AuthApi @relation(fields: [authApiId], references: [id])
+}
+
+model AuthApi {
+  id    String @id @default(uuid())
+  apiId String @unique
+  type  String
+
+  data AuthApiData[]
+  api  Api           @relation(fields: [apiId], references: [id])
+}
+
 model Api {
   id          String    @id @default(uuid())
   name        String    @db.VarChar(150)
@@ -47,6 +74,8 @@ model Api {
 
   categories Category[]
   roles      Role[]
+  query      Query[]
+  auth       AuthApi?
 }
 
 enum StatusAPI {
