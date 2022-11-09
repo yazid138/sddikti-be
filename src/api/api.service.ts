@@ -10,6 +10,9 @@ export class ApiService {
     return await this.prismaService.api.findMany({
       where,
       include: { categories: true },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
   }
 
@@ -18,7 +21,7 @@ export class ApiService {
   ): Promise<Api & { categories: Category[] }> {
     return await this.prismaService.api.findUnique({
       where,
-      include: { categories: true },
+      include: { categories: true, auth: true, query: true },
     });
   }
 

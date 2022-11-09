@@ -3,7 +3,7 @@ import { Reflector } from '@nestjs/core';
 import { User } from '@prisma/client';
 import { Request } from 'express';
 import { Observable } from 'rxjs';
-import { ROLES_KEY } from '../decorator/roles.decorator';
+import { ROLES_KEY } from '../decorator/auth.decorator';
 import { Role } from '../../utils/constants';
 
 @Injectable()

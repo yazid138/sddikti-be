@@ -64,7 +64,7 @@ export class AppController {
     const user = await this.userService.createUser({
       name: userDto.name,
       password: userDto.password,
-      username: userDto.username,
+      email: userDto.email,
       role: { connect: { id: role.id } },
     });
     return {

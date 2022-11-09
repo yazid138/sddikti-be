@@ -5,6 +5,7 @@ import {
   IsOptional,
   IsString,
   IsUrl,
+  ArrayNotEmpty,
 } from 'class-validator';
 import { IsNameApiExists } from 'src/common/validation/api-name-exists';
 
@@ -31,7 +32,7 @@ export class AddApiDto {
   @IsString()
   description?: string;
 
-  @IsNotEmpty()
+  @ArrayNotEmpty()
   @IsArray()
   categories: string[];
 }

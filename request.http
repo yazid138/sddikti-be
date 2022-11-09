@@ -10,7 +10,7 @@ Content-Type: application/json
 
 {
     "name": "yazid",
-    "username": "yazid1",
+    "email": "yazid@gmail.com",
     "password": "123",
     "role": "09bd8bf8-1e18-4b5b-8512-421ce45ff18e"
 }
@@ -20,7 +20,7 @@ POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-    "username": "admin",
+    "email": "admin",
     "password": "123"
 }
 
@@ -37,15 +37,36 @@ GET http://localhost:3000/role
 GET http://localhost:3000/api-manager
 
 ###
+GET http://localhost:3000/api-manager/248e4786-16c5-4678-a60b-9ee099cb93b4
+
+###
 POST http://localhost:3000/api-manager/add
 Content-Type: application/json
 
 {
-    "name": "google 1",
+    "name": "google 18",
     "url": "https://haloyazid.com",
     "author": "Yazid",
     "description": "ini adalah deskripsi api",
     "categories": ["google"]
+}
+
+###
+POST http://localhost:3000/api-manager/query/add
+Content-Type: application/json
+
+{
+    "api_id": "248e4786-16c5-4678-a60b-9ee099cb93b4",
+    "query": [
+    {
+        "name": "limit",
+        "type": "number"
+    }
+    # {
+    #     "name": "page",
+    #     "type": "number"
+    # }
+    ]
 }
 
 ###

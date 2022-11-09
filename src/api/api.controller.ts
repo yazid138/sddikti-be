@@ -8,14 +8,11 @@ import {
   Get,
   Delete,
   ParseUUIDPipe,
-  UseGuards,
 } from '@nestjs/common';
 import { ApiService } from './api.service';
 import { AddApiDto, UpdateApiDto } from './api.dto';
 import { Prisma } from '@prisma/client';
-import { Roles } from 'src/auth/decorator/roles.decorator';
-import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
-import { RolesGuard } from 'src/auth/guard/roles.guard';
+import { Auth } from 'src/auth/decorator/auth.decorator';
 import { Role } from 'src/utils/constants';
 import * as slug from 'slug';
 
@@ -42,15 +39,14 @@ export class ApiController {
     };
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.ADMIN)
+  @Auth(Role.ADMIN)
   @Post('add')
   async addAPI(@Body() apiDto: AddApiDto) {
     const categories = await this.categoryService.getCategory(
       apiDto.categories,
     );
 
-    const data = await this.apiService.addAPI({
+    await this.apiService.addAPI({
       name: slug(apiDto.name),
       url: apiDto.url,
       author: apiDto.author,
@@ -60,11 +56,10 @@ export class ApiController {
       },
     });
 
-    return { code: 201, message: 'Berhasil menambah Api', data };
+    return { code: 201, message: 'Berhasil menambah Api' };
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.ADMIN)
+  @Auth(Role.ADMIN)
   @Put('update/:id')
   async updateAPI(
     @Param('id', ParseUUIDPipe) id: string,
@@ -86,15 +81,13 @@ export class ApiController {
         set: categories.map((e) => ({ id: e.id })),
       };
     }
-
+    await this.apiService.updateAPI({ id }, data);
     return {
       message: 'Berhasil mengubah Api',
-      data: await this.apiService.updateAPI({ id }, data),
     };
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.ADMIN)
+  @Auth(Role.ADMIN)
   @Delete('delete/:id')
   async deleteApi(@Param('id', ParseUUIDPipe) id: string) {
     await this.apiService.deleteApi({ id });
