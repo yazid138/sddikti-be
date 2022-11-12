@@ -27,6 +27,7 @@
     "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
+    "@medibloc/nestjs-request-context": "^1.0.1",
     "@nestjs/axios": "^0.1.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",

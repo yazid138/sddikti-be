@@ -10,6 +10,8 @@ import * as cookieParser from 'cookie-parser';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { PrismaExceptionFilter } from './common/filters/prisma-exception.filter';
 import { useContainer } from 'class-validator';
+import { requestContextMiddleware } from '@medibloc/nestjs-request-context';
+import { MyRequestContext } from './common/context/my-request-context';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -43,6 +45,9 @@ async function bootstrap() {
       whitelist: true,
     }),
   );
+
+  // Enable Context
+  app.use(requestContextMiddleware(MyRequestContext));
 
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 

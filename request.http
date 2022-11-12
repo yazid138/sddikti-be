@@ -61,11 +61,11 @@ Content-Type: application/json
     {
         "name": "limit",
         "type": "number"
+    },
+    {
+        "name": "page",
+        "type": "number"
     }
-    # {
-    #     "name": "page",
-    #     "type": "number"
-    # }
     ]
 }
 

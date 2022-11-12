@@ -25,6 +25,8 @@ import { RoleService } from './role/role.service';
 import { exclude } from './utils/functions';
 import { Request, Response } from 'express';
 import { Role } from './utils/constants';
+import { RequestContext } from '@medibloc/nestjs-request-context';
+import { MyRequestContext } from './common/context/my-request-context';
 
 @Controller()
 export class AppController {
@@ -92,6 +94,7 @@ export class AppController {
   @UseGuards(JwtAuthGuard)
   @Delete('logout')
   async logout(@Res() res: Response) {
+    RequestContext.get<MyRequestContext>().user = null;
     res
       .cookie('auth-cookie', '', { expires: new Date() })
       .json({ code: 200, message: 'Berhasil logout' });

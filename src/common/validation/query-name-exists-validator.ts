@@ -1,3 +1,4 @@
+import { RequestContext } from '@medibloc/nestjs-request-context';
 import { Injectable } from '@nestjs/common';
 import {
   registerDecorator,
@@ -7,16 +8,21 @@ import {
   ValidatorConstraintInterface,
 } from 'class-validator';
 import { QueryService } from 'src/api/query/query.service';
+import { MyRequestContext } from '../context/my-request-context';
 
 @ValidatorConstraint({ async: true })
 @Injectable()
 export class QueryNameExistsValidator implements ValidatorConstraintInterface {
   constructor(private readonly queryService: QueryService) {}
 
-  async validate(value: any, args?: ValidationArguments) {
+  async validate(value: string) {
     if (value) {
-      console.log(args);
-      const query = await this.queryService.getQueryApi({ name: value });
+      const ctx = RequestContext.get<MyRequestContext>();
+      const api_id = ctx.body['api_id'];
+      const query = await this.queryService.getQueryApi({
+        name: value,
+        apiId: api_id,
+      });
       return !query.length;
     }
     return true;

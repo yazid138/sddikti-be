@@ -5,6 +5,8 @@ import { UserService } from 'src/user/user.service';
 import { ConfigService } from '@nestjs/config';
 import { User } from '@prisma/client';
 import { Request } from 'express';
+import { RequestContext } from '@medibloc/nestjs-request-context';
+import { MyRequestContext } from 'src/common/context/my-request-context';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -30,6 +32,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: { id: string }): Promise<User> {
-    return await this.userService.user({ id: payload.id });
+    const user = await this.userService.user({ id: payload.id });
+    const ctx: MyRequestContext = RequestContext.get();
+    ctx.user = user;
+    return user;
   }
 }
