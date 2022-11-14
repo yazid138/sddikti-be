@@ -1,4 +1,9 @@
-import { ExceptionFilter, Catch, ArgumentsHost } from '@nestjs/common';
+import {
+  ExceptionFilter,
+  Catch,
+  ArgumentsHost,
+  HttpStatus,
+} from '@nestjs/common';
 import { Response as Res } from 'express';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 
@@ -12,14 +17,14 @@ export class PrismaExceptionFilter implements ExceptionFilter {
       code: number;
       message?: string;
     } = {
-      code: 500,
+      code: HttpStatus.INTERNAL_SERVER_ERROR,
       message: 'Terjadi kesalahan pada server',
     };
 
     if (exception.code === 'P2025') {
       responseData = {
         ...responseData,
-        code: 404,
+        code: HttpStatus.NOT_FOUND,
         message: 'Error! Data tidak ada',
       };
     }

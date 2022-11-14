@@ -1,5 +1,4 @@
-import { RequestContext } from '@medibloc/nestjs-request-context';
-import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
 import {
   registerDecorator,
   ValidationArguments,
@@ -7,22 +6,29 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { MyContext } from '../context/my-context';
+import { RequestContext } from '@medibloc/nestjs-request-context';
+import { Injectable } from '@nestjs/common';
 
 @ValidatorConstraint({ async: true })
 @Injectable()
-export class QueryNameExistsValidator implements ValidatorConstraintInterface {
+export class ApiAuthDataNameExists implements ValidatorConstraintInterface {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async validate(value: string) {
+  async validate(value: string, args?: ValidationArguments) {
     const ctx = RequestContext.get<MyContext>();
     const api_id: string = ctx.body['api_id'];
-    if (!value && !api_id) return false;
-    const query = await this.prismaService.queryApi.findFirst({
-      where: { name: value, apiId: api_id },
+
+    if (!value && !api_id) return true;
+
+    const api = await this.prismaService.api.findUnique({
+      where: { id: api_id },
+      include: { auth: { include: { data: true } } },
     });
-    return !query;
+
+    if (!api) return true;
+
+    return !api.auth?.data.find((e) => e.name === value);
   }
 
   defaultMessage(validationArguments?: ValidationArguments): string {
@@ -30,15 +36,15 @@ export class QueryNameExistsValidator implements ValidatorConstraintInterface {
   }
 }
 
-export function IsNameQueryExists(validationOption?: ValidationOptions) {
+export function IsApiAuthDataNameExists(validationOption?: ValidationOptions) {
   return function (object: any, propertyName: string) {
     registerDecorator({
-      name: 'IsNameQueryExists',
+      name: 'IsApiAuthDataNameExists',
       target: object.constructor,
       constraints: [],
       propertyName,
       options: validationOption,
-      validator: QueryNameExistsValidator,
+      validator: ApiAuthDataNameExists,
       async: true,
     });
   };

@@ -11,7 +11,7 @@ import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { PrismaExceptionFilter } from './common/filters/prisma-exception.filter';
 import { useContainer } from 'class-validator';
 import { requestContextMiddleware } from '@medibloc/nestjs-request-context';
-import { MyRequestContext } from './common/context/my-request-context';
+import { MyContext } from './common/context/my-context';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -47,7 +47,7 @@ async function bootstrap() {
   );
 
   // Enable Context
-  app.use(requestContextMiddleware(MyRequestContext));
+  app.use(requestContextMiddleware(MyContext));
 
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 

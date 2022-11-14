@@ -37,14 +37,14 @@ GET http://localhost:3000/role
 GET http://localhost:3000/api-manager
 
 ###
-GET http://localhost:3000/api-manager/248e4786-16c5-4678-a60b-9ee099cb93b4
+GET http://localhost:3000/api-manager/20e77392-9c12-41e0-921a-6949ceea824e
 
 ###
 POST http://localhost:3000/api-manager/add
 Content-Type: application/json
 
 {
-    "name": "google 18",
+    "name": "google",
     "url": "https://haloyazid.com",
     "author": "Yazid",
     "description": "ini adalah deskripsi api",
@@ -56,7 +56,7 @@ POST http://localhost:3000/api-manager/query/add
 Content-Type: application/json
 
 {
-    "api_id": "248e4786-16c5-4678-a60b-9ee099cb93b4",
+    "api_id": "20e77392-9c12-41e0-921a-6949ceea824e",
     "query": [
     {
         "name": "limit",
@@ -70,7 +70,20 @@ Content-Type: application/json
 }
 
 ###
-PUT  http://localhost:3000/api-manager/update/64f8964d-f16b-4c17-b121-d91ddc823a30
+POST http://localhost:3000/api-manager/auth/add
+Content-Type: application/json
+
+{
+    "api_id": "20e77392-9c12-41e0-921a-6949ceea824e",
+    "auth_type": "Bearer",
+    "data": [{
+        "name": "token",
+        "value": "asafasdaf"
+    }]
+}
+
+###
+PUT  http://localhost:3000/api-manager/update/20e77392-9c12-41e0-921a-6949ceea824e
 Content-Type: application/json
 
 {
@@ -81,4 +94,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3000/api-manager/delete/a7032208-f005-4e9e-bc92-081d04f40d6b
+DELETE http://localhost:3000/api-manager/delete/20e77392-9c12-41e0-921a-6949ceea824e

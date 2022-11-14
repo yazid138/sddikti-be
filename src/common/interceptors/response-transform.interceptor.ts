@@ -1,6 +1,7 @@
 import {
   CallHandler,
   ExecutionContext,
+  HttpStatus,
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Response as Res, Request } from 'express';
 import { RequestContext } from '@medibloc/nestjs-request-context';
-import { MyRequestContext } from '../context/my-request-context';
+import { MyContext } from '../context/my-context';
 
 export interface Response<T> {
   code: number;
@@ -27,14 +28,15 @@ export class ResponseTransformInterceptor<T>
     const ctx = context.switchToHttp();
     const res = ctx.getResponse<Res>();
     const req = ctx.getRequest<Request>();
-    RequestContext.get<MyRequestContext>().body = req.body;
-    RequestContext.get<MyRequestContext>().params = req.params;
-    RequestContext.get<MyRequestContext>().query = req.query;
+    const reqCtx = RequestContext.get<MyContext>();
+    reqCtx.body = req.body;
+    reqCtx.params = req.params;
+    reqCtx.query = req.query;
     return next.handle().pipe(
       map((response) => {
-        res.status(response?.code || 200);
+        res.status(response?.code || HttpStatus.OK);
         return {
-          code: response?.code || 200,
+          code: response?.code || HttpStatus.OK,
           message: response?.message,
           data: response?.data || response,
         };

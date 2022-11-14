@@ -13,7 +13,9 @@ import { PrismaModule } from './prisma/prisma.module';
 import { UserExistsValidator } from './common/validation/user-exists-validator';
 import { ApiNameExists } from './common/validation/api-name-exists';
 import { QueryNameExistsValidator } from './common/validation/query-name-exists-validator';
-import { QueryModule } from './api/query/query.module';
+import { UniqueValidator } from './common/validation/unique-validator';
+import { ApiAuthDataNameExists } from './common/validation/api-auth-data-name-exists';
+import { ExistsValidator } from './common/validation/exists-validator';
 
 @Module({
   imports: [
@@ -28,9 +30,15 @@ import { QueryModule } from './api/query/query.module';
     RoleModule,
     CategoryModule,
     ApiModule,
-    QueryModule,
   ],
   controllers: [AppController],
-  providers: [UserExistsValidator, ApiNameExists, QueryNameExistsValidator],
+  providers: [
+    UserExistsValidator,
+    ApiNameExists,
+    QueryNameExistsValidator,
+    UniqueValidator,
+    ApiAuthDataNameExists,
+    ExistsValidator,
+  ],
 })
 export class AppModule {}

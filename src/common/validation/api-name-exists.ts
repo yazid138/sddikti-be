@@ -15,13 +15,11 @@ export class ApiNameExists implements ValidatorConstraintInterface {
   constructor(private readonly apiService: ApiService) {}
 
   async validate(value: string) {
-    if (value) {
-      const api = await this.apiService.listApi({
-        name: slug(value),
-      });
-      return !api.length;
-    }
-    return true;
+    if (!value) return false;
+    const api = await this.apiService.listApi({
+      name: slug(value),
+    });
+    return !api.length;
   }
 
   defaultMessage(validationArguments?: ValidationArguments): string {

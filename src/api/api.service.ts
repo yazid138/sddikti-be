@@ -1,5 +1,5 @@
 import { PrismaService } from './../prisma/prisma.service';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Api, Category, Prisma } from '@prisma/client';
 
 @Injectable()
@@ -19,10 +19,18 @@ export class ApiService {
   async detailApi(
     where: Prisma.ApiWhereUniqueInput,
   ): Promise<Api & { categories: Category[] }> {
-    return await this.prismaService.api.findUnique({
+    const data = await this.prismaService.api.findUnique({
       where,
-      include: { categories: true, auth: true, query: true },
+      include: {
+        categories: true,
+        auth: { include: { data: true } },
+        query: true,
+      },
     });
+    if (!data) {
+      throw new NotFoundException();
+    }
+    return data;
   }
 
   async addAPI(data: Prisma.ApiCreateInput): Promise<Api> {

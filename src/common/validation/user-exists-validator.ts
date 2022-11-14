@@ -17,13 +17,12 @@ export class UserExistsValidator implements ValidatorConstraintInterface {
     value: string,
     validationArguments?: ValidationArguments,
   ): Promise<boolean> {
-    if (value) {
-      const user = await this.userService.user({
-        [validationArguments.constraints[0]]: value,
-      });
-      return !user;
-    }
-    return true;
+    if (!value) return false;
+    const [property = 'id'] = validationArguments.constraints;
+    const user = await this.userService.user({
+      [property]: value,
+    });
+    return !user;
   }
 
   defaultMessage(validationArguments?: ValidationArguments): string {
@@ -32,7 +31,7 @@ export class UserExistsValidator implements ValidatorConstraintInterface {
 }
 
 export function IsUserExists(
-  option: string[],
+  property: string,
   validationOption?: ValidationOptions,
 ) {
   return function (object: any, propertyName: string) {
@@ -40,7 +39,7 @@ export function IsUserExists(
       name: 'IsUserExist',
       target: object.constructor,
       propertyName,
-      constraints: option,
+      constraints: [property],
       options: validationOption,
       validator: UserExistsValidator,
       async: true,

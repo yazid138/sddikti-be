@@ -45,7 +45,6 @@ export class ApiController {
     const categories = await this.categoryService.getCategory(
       apiDto.categories,
     );
-
     await this.apiService.addAPI({
       name: slug(apiDto.name),
       url: apiDto.url,
@@ -66,21 +65,21 @@ export class ApiController {
     @Body() apiDto: UpdateApiDto,
   ) {
     const data: Prisma.ApiUpdateInput = {
-      name: slug(apiDto.name),
+      name: apiDto.name && slug(apiDto.name),
       url: apiDto.url,
       author: apiDto.author,
       status: apiDto.status,
       description: apiDto.description,
     };
 
-    if (apiDto.categories) {
-      const categories = await this.categoryService.getCategory(
-        apiDto.categories,
-      );
-      data.categories = {
-        set: categories.map((e) => ({ id: e.id })),
-      };
-    }
+    // if (apiDto.categories) {
+    //   const categories = await this.categoryService.getCategory(
+    //     apiDto.categories,
+    //   );
+    //   data.categories = {
+    //     set: categories.map((e) => ({ id: e.id })),
+    //   };
+    // }
     await this.apiService.updateAPI({ id }, data);
     return {
       message: 'Berhasil mengubah Api',
