@@ -12,7 +12,7 @@ model User {
   name      String   @db.VarChar(255)
   email     String   @unique @db.VarChar(100)
   password  String   @db.VarChar(150)
-  roleId    String
+  roleId    String   @map("role_id")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @map("updated_at")
 
@@ -26,7 +26,7 @@ model Role {
   name String @unique @db.VarChar(50)
 
   users User[]
-  apis  Api[]
+  apis  RoleApi[]
 
   @@map("m_roles")
 }
@@ -36,7 +36,7 @@ model Category {
   name String @unique @db.VarChar(50)
 
   // apis Api[]
-  apis Api[]
+  apis CategoryApi[]
 
   @@map("m_categories")
 }
@@ -87,13 +87,35 @@ model Api {
   updatedAt   DateTime  @updatedAt @map("updated_at")
   deletedAt   DateTime? @map("deleted_at")
 
+  categories CategoryApi[]
   // categories Category[]
-  categories Category[]
-  roles      Role[]
+  roles      RoleApi[]
   query      QueryApi[]
   auth       AuthApi?
 
   @@map("m_apis")
+}
+
+model CategoryApi {
+  id         String @id @default(uuid())
+  apiId      String @map("api_id")
+  categoryId String @map("category_id")
+
+  api      Api      @relation(fields: [apiId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id])
+
+  @@map("t_category_api")
+}
+
+model RoleApi {
+  id     String @id @default(uuid())
+  apiId  String @map("api_id")
+  roleId String @map("role_id")
+
+  api  Api  @relation(fields: [apiId], references: [id])
+  role Role @relation(fields: [roleId], references: [id])
+
+  @@map("t_role_api")
 }
 
 enum StatusAPI {

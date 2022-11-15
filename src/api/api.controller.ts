@@ -15,6 +15,8 @@ import { Prisma } from '@prisma/client';
 import { Auth } from 'src/auth/decorator/auth.decorator';
 import { Role } from 'src/utils/constants';
 import * as slug from 'slug';
+import { NotFoundException } from '@nestjs/common/exceptions';
+import { HttpStatus } from '@nestjs/common/enums';
 
 @Controller('api-manager')
 export class ApiController {
@@ -25,16 +27,22 @@ export class ApiController {
 
   @Get()
   async getListApi() {
+    const data = await this.apiService.listApi();
     return {
-      data: await this.apiService.listApi(),
+      data: data.map((e) => ({
+        ...e,
+        categories: e.categories.map((e) => ({ ...e.category })),
+      })),
       message: 'Berhasil mengambil data Api',
     };
   }
 
   @Get(':id')
   async getDetailApi(@Param('id', ParseUUIDPipe) id: string) {
+    const data: any = await this.apiService.detailApi({ id });
+    data.categories = data.categories.map((e) => ({ ...e.category }));
     return {
-      data: await this.apiService.detailApi({ id }),
+      data,
       message: 'Berhasil mengambil detail data Api',
     };
   }
@@ -51,11 +59,11 @@ export class ApiController {
       author: apiDto.author,
       description: apiDto.description,
       categories: {
-        connect: categories.map((e) => ({ id: e.id })),
+        create: categories.map((e) => ({ categoryId: e.id })),
       },
     });
 
-    return { code: 201, message: 'Berhasil menambah Api' };
+    return { code: HttpStatus.CREATED, message: 'Berhasil menambah Api' };
   }
 
   @Auth(Role.ADMIN)
@@ -64,6 +72,9 @@ export class ApiController {
     @Param('id', ParseUUIDPipe) id: string,
     @Body() apiDto: UpdateApiDto,
   ) {
+    const api = await this.apiService.detailApi({ id });
+    if (!api) throw new NotFoundException();
+
     const data: Prisma.ApiUpdateInput = {
       name: apiDto.name && slug(apiDto.name),
       url: apiDto.url,
@@ -72,14 +83,12 @@ export class ApiController {
       description: apiDto.description,
     };
 
-    // if (apiDto.categories) {
-    //   const categories = await this.categoryService.getCategory(
-    //     apiDto.categories,
-    //   );
-    //   data.categories = {
-    //     set: categories.map((e) => ({ id: e.id })),
-    //   };
-    // }
+    if (apiDto.categories) {
+      const categories = await this.categoryService.getCategory(
+        apiDto.categories,
+      );
+      console.log(categories);
+    }
     await this.apiService.updateAPI({ id }, data);
     return {
       message: 'Berhasil mengubah Api',

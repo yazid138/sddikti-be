@@ -25,6 +25,7 @@ import { RoleService } from './role/role.service';
 import { exclude } from './utils/functions';
 import { Request, Response } from 'express';
 import { Role } from './utils/constants';
+import { HttpStatus } from '@nestjs/common/enums';
 
 @Controller()
 export class AppController {
@@ -69,7 +70,7 @@ export class AppController {
     });
     return {
       data: exclude(user, 'password', 'roleId'),
-      code: 201,
+      code: HttpStatus.CREATED,
       message: 'Berhasil menambah user',
     };
   }
@@ -86,7 +87,7 @@ export class AppController {
         httpOnly: true,
         expires: now,
       })
-      .json({ code: 200, message: 'Berhasil login' });
+      .json({ code: HttpStatus.OK, message: 'Berhasil login' });
   }
 
   @UseGuards(JwtAuthGuard)
@@ -94,7 +95,7 @@ export class AppController {
   async logout(@Res() res: Response) {
     res
       .cookie('auth-cookie', '', { expires: new Date() })
-      .json({ code: 200, message: 'Berhasil logout' });
+      .json({ code: HttpStatus.OK, message: 'Berhasil logout' });
   }
 
   @UseGuards(JwtAuthGuard)

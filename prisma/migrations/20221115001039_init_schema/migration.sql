@@ -4,7 +4,7 @@ CREATE TABLE `m_users` (
     `name` VARCHAR(255) NOT NULL,
     `email` VARCHAR(100) NOT NULL,
     `password` VARCHAR(150) NOT NULL,
-    `roleId` VARCHAR(191) NOT NULL,
+    `role_id` VARCHAR(191) NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
@@ -78,25 +78,25 @@ CREATE TABLE `m_apis` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `_ApiToCategory` (
-    `A` VARCHAR(191) NOT NULL,
-    `B` VARCHAR(191) NOT NULL,
+CREATE TABLE `t_category_api` (
+    `id` VARCHAR(191) NOT NULL,
+    `api_id` VARCHAR(191) NOT NULL,
+    `category_id` VARCHAR(191) NOT NULL,
 
-    UNIQUE INDEX `_ApiToCategory_AB_unique`(`A`, `B`),
-    INDEX `_ApiToCategory_B_index`(`B`)
+    PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `_ApiToRole` (
-    `A` VARCHAR(191) NOT NULL,
-    `B` VARCHAR(191) NOT NULL,
+CREATE TABLE `t_role_api` (
+    `id` VARCHAR(191) NOT NULL,
+    `api_id` VARCHAR(191) NOT NULL,
+    `role_id` VARCHAR(191) NOT NULL,
 
-    UNIQUE INDEX `_ApiToRole_AB_unique`(`A`, `B`),
-    INDEX `_ApiToRole_B_index`(`B`)
+    PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `m_users` ADD CONSTRAINT `m_users_roleId_fkey` FOREIGN KEY (`roleId`) REFERENCES `m_roles`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `m_users` ADD CONSTRAINT `m_users_role_id_fkey` FOREIGN KEY (`role_id`) REFERENCES `m_roles`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `m_query_api` ADD CONSTRAINT `m_query_api_api_id_fkey` FOREIGN KEY (`api_id`) REFERENCES `m_apis`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -108,13 +108,13 @@ ALTER TABLE `m_auth_api_data` ADD CONSTRAINT `m_auth_api_data_auth_api_id_fkey` 
 ALTER TABLE `m_auth_api` ADD CONSTRAINT `m_auth_api_api_id_fkey` FOREIGN KEY (`api_id`) REFERENCES `m_apis`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `_ApiToCategory` ADD CONSTRAINT `_ApiToCategory_A_fkey` FOREIGN KEY (`A`) REFERENCES `m_apis`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `t_category_api` ADD CONSTRAINT `t_category_api_api_id_fkey` FOREIGN KEY (`api_id`) REFERENCES `m_apis`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `_ApiToCategory` ADD CONSTRAINT `_ApiToCategory_B_fkey` FOREIGN KEY (`B`) REFERENCES `m_categories`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `t_category_api` ADD CONSTRAINT `t_category_api_category_id_fkey` FOREIGN KEY (`category_id`) REFERENCES `m_categories`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `_ApiToRole` ADD CONSTRAINT `_ApiToRole_A_fkey` FOREIGN KEY (`A`) REFERENCES `m_apis`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `t_role_api` ADD CONSTRAINT `t_role_api_api_id_fkey` FOREIGN KEY (`api_id`) REFERENCES `m_apis`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `_ApiToRole` ADD CONSTRAINT `_ApiToRole_B_fkey` FOREIGN KEY (`B`) REFERENCES `m_roles`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `t_role_api` ADD CONSTRAINT `t_role_api_role_id_fkey` FOREIGN KEY (`role_id`) REFERENCES `m_roles`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

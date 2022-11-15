@@ -1,4 +1,5 @@
 import { Controller, Post, Body } from '@nestjs/common';
+import { HttpStatus } from '@nestjs/common/enums';
 import { Auth } from 'src/auth/decorator/auth.decorator';
 import { Role } from 'src/utils/constants';
 import { AddQueryDto } from './query.dto';
@@ -12,6 +13,6 @@ export class QueryController {
   @Post('add')
   async addQuery(@Body() queryDto: AddQueryDto) {
     await this.queryService.addQuery(queryDto.api_id, queryDto.query);
-    return { mesaage: 'Berhasil menambah query' };
+    return { code: HttpStatus.CREATED, mesaage: 'Berhasil menambah query' };
   }
 }

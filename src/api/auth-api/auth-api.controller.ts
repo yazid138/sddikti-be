@@ -2,6 +2,7 @@ import { AuthApiService } from './auth-api.service';
 import { Controller, Post, Body } from '@nestjs/common';
 import { AddAuthApiDTO } from './auth-api.dto';
 import { AuthApiDataService } from './auth-api-data/auth-api-data.service';
+import { HttpStatus } from '@nestjs/common/enums';
 
 @Controller('api-manager/auth')
 export class AuthApiController {
@@ -19,6 +20,6 @@ export class AuthApiController {
 
     await this.authApiDataService.addApiAuthData(authApi.id, authApiDto.data);
 
-    return { message: 'berhasil menambah Auth API' };
+    return { code: HttpStatus.CREATED, message: 'berhasil menambah Auth API' };
   }
 }
