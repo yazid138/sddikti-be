@@ -27,26 +27,26 @@ export class CategoryService {
           where: { api: { id: apiId }, category: { name } },
           include: { category: true },
         });
-        if (!data) {
-          data = await this.prismaService.categoryOnApi.create({
-            data: {
-              category: {
-                connectOrCreate: {
-                  create: { name },
-                  where: { name },
-                },
-              },
-              api: {
-                connect: {
-                  id: apiId,
-                },
+        if (data) return data;
+
+        data = await this.prismaService.categoryOnApi.create({
+          data: {
+            category: {
+              connectOrCreate: {
+                create: { name },
+                where: { name },
               },
             },
-            include: {
-              category: true,
+            api: {
+              connect: {
+                id: apiId,
+              },
             },
-          });
-        }
+          },
+          include: {
+            category: true,
+          },
+        });
         return data;
       }),
     );
@@ -67,7 +67,7 @@ export class CategoryService {
         await this.prismaService.categoryOnApi.deleteMany({
           where: { id: { in: categoryOnApi.map((e) => e.id) } },
         });
-        const data = await this.prismaService.categoryOnApi.create({
+        return await this.prismaService.categoryOnApi.create({
           data: {
             category: {
               connect: {
@@ -81,7 +81,6 @@ export class CategoryService {
             },
           },
         });
-        return data;
       }),
     );
   }
