@@ -26,7 +26,7 @@ model Role {
   name String @unique @db.VarChar(50)
 
   users User[]
-  apis  RoleApi[]
+  apis  RoleOnApi[]
 
   @@map("m_roles")
 }
@@ -36,7 +36,7 @@ model Category {
   name String @unique @db.VarChar(50)
 
   // apis Api[]
-  apis CategoryApi[]
+  apis CategoryOnApi[]
 
   @@map("m_categories")
 }
@@ -87,16 +87,16 @@ model Api {
   updatedAt   DateTime  @updatedAt @map("updated_at")
   deletedAt   DateTime? @map("deleted_at")
 
-  categories CategoryApi[]
+  categories CategoryOnApi[]
   // categories Category[]
-  roles      RoleApi[]
+  roles      RoleOnApi[]
   query      QueryApi[]
   auth       AuthApi?
 
   @@map("m_apis")
 }
 
-model CategoryApi {
+model CategoryOnApi {
   id         String @id @default(uuid())
   apiId      String @map("api_id")
   categoryId String @map("category_id")
@@ -107,7 +107,7 @@ model CategoryApi {
   @@map("t_category_api")
 }
 
-model RoleApi {
+model RoleOnApi {
   id     String @id @default(uuid())
   apiId  String @map("api_id")
   roleId String @map("role_id")

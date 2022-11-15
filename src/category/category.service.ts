@@ -1,7 +1,6 @@
 import { PrismaService } from './../prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
-import { Category } from '@prisma/client';
-import { create } from 'domain';
+import { Category, CategoryOnApi } from '@prisma/client';
 
 @Injectable()
 export class CategoryService {
@@ -20,14 +19,68 @@ export class CategoryService {
     );
   }
 
-  async getCategoryApi(apiId: string, categories: Category[]) {
+  async getCategoryApi(apiId: string, categories: string[]) {
     return await Promise.all(
-      categories.map(async (data) => {
-        const value = data.name.toLowerCase().trim();
-        return await this.prismaService.categoryApi.findFirst({
-          where: { category: { name: value }, api: { id: apiId } },
+      categories.map(async (e) => {
+        const name = e.toLowerCase().trim();
+        let data = await this.prismaService.categoryOnApi.findFirst({
+          where: { api: { id: apiId }, category: { name } },
           include: { category: true },
         });
+        if (!data) {
+          data = await this.prismaService.categoryOnApi.create({
+            data: {
+              category: {
+                create: {
+                  name,
+                },
+              },
+              api: {
+                connect: {
+                  id: apiId,
+                },
+              },
+            },
+            include: {
+              category: true,
+            },
+          });
+        }
+        return data;
+      }),
+    );
+  }
+
+  async updateCategoryApi(
+    apiId: string,
+    categories: (CategoryOnApi & {
+      category: Category;
+    })[],
+  ) {
+    return await Promise.all(
+      categories.map(async (e) => {
+        const name = e.category.name.toLowerCase().trim();
+        const categoryOnApi = await this.prismaService.categoryOnApi.findMany({
+          where: { apiId },
+        });
+        await this.prismaService.categoryOnApi.deleteMany({
+          where: { id: { in: categoryOnApi.map((e) => e.id) } },
+        });
+        const data = await this.prismaService.categoryOnApi.create({
+          data: {
+            category: {
+              connect: {
+                name,
+              },
+            },
+            api: {
+              connect: {
+                id: apiId,
+              },
+            },
+          },
+        });
+        return data;
       }),
     );
   }

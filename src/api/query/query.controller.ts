@@ -13,6 +13,6 @@ export class QueryController {
   @Post('add')
   async addQuery(@Body() queryDto: AddQueryDto) {
     await this.queryService.addQuery(queryDto.api_id, queryDto.query);
-    return { code: HttpStatus.CREATED, mesaage: 'Berhasil menambah query' };
+    return { code: HttpStatus.CREATED, message: 'Berhasil menambah query' };
   }
 }

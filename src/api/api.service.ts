@@ -1,14 +1,6 @@
 import { PrismaService } from './../prisma/prisma.service';
-import { Injectable, NotFoundException } from '@nestjs/common';
-import {
-  Api,
-  AuthApi,
-  Category,
-  CategoryApi,
-  Prisma,
-  QueryApi,
-  AuthApiData,
-} from '@prisma/client';
+import { Injectable } from '@nestjs/common';
+import { Api, Prisma } from '@prisma/client';
 
 @Injectable()
 export class ApiService {
@@ -25,7 +17,7 @@ export class ApiService {
   }
 
   async detailApi(where: Prisma.ApiWhereUniqueInput) {
-    const data = await this.prismaService.api.findUnique({
+    const data = await this.prismaService.api.findUniqueOrThrow({
       where,
       include: {
         categories: { include: { category: true } },
@@ -33,9 +25,6 @@ export class ApiService {
         query: true,
       },
     });
-    if (!data) {
-      throw new NotFoundException();
-    }
     return data;
   }
 
@@ -50,7 +39,6 @@ export class ApiService {
     where: Prisma.ApiWhereUniqueInput,
     data: Prisma.ApiUpdateInput,
   ) {
-    data.updatedAt = new Date();
     return await this.prismaService.api.update({
       where,
       data,

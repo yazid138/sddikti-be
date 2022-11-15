@@ -84,10 +84,11 @@ export class ApiController {
     };
 
     if (apiDto.categories) {
-      const categories = await this.categoryService.getCategory(
+      const categories = await this.categoryService.getCategoryApi(
+        api.id,
         apiDto.categories,
       );
-      console.log(categories);
+      await this.categoryService.updateCategoryApi(api.id, categories);
     }
     await this.apiService.updateAPI({ id }, data);
     return {

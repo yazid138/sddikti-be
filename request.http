@@ -37,14 +37,14 @@ GET http://localhost:3000/role
 GET http://localhost:3000/api-manager
 
 ###
-GET http://localhost:3000/api-manager/1cc7818a-0315-41ee-9d6f-4fe9594ccf5d
+GET http://localhost:3000/api-manager/0012f45e-dc0c-4b00-8226-534f7b344962
 
 ###
 POST http://localhost:3000/api-manager/add
 Content-Type: application/json
 
 {
-    "name": "google 1",
+    "name": "google 5",
     "url": "https://haloyazid.com",
     "author": "Yazid",
     "description": "ini adalah deskripsi api",
@@ -56,7 +56,7 @@ POST http://localhost:3000/api-manager/query/add
 Content-Type: application/json
 
 {
-    "api_id": "1cc7818a-0315-41ee-9d6f-4fe9594ccf5d",
+    "api_id": "0012f45e-dc0c-4b00-8226-534f7b344962",
     "query": [
     {
         "name": "limit",
@@ -74,7 +74,7 @@ POST http://localhost:3000/api-manager/auth/add
 Content-Type: application/json
 
 {
-    "api_id": "1cc7818a-0315-41ee-9d6f-4fe9594ccf5d",
+    "api_id": "0012f45e-dc0c-4b00-8226-534f7b344962",
     "auth_type": "Bearer",
     "data": [{
         "name": "token",
@@ -83,14 +83,14 @@ Content-Type: application/json
 }
 
 ###
-PUT  http://localhost:3000/api-manager/update/1cc7818a-0315-41ee-9d6f-4fe9594ccf5d
+PUT  http://localhost:3000/api-manager/update/0012f45e-dc0c-4b00-8226-534f7b344962
 Content-Type: application/json
 
 {
     "url": "http://google.com",
     "status": "TIDAK_AKTIF",
     "author": "orang",
-    "categories": ["test", "pendidikan"]
+    "categories": ["asik bener"]
 }
 
 ###

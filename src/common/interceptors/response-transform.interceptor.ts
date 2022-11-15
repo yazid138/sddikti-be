@@ -33,12 +33,13 @@ export class ResponseTransformInterceptor<T>
     reqCtx.params = req.params;
     reqCtx.query = req.query;
     return next.handle().pipe(
-      map((response) => {
-        res.status(response?.code || HttpStatus.OK);
+      map((response: any) => {
+        const { code = HttpStatus.OK, message, data } = response;
+        res.status(code);
         return {
-          code: response?.code || HttpStatus.OK,
-          message: response?.message,
-          data: response?.data || response,
+          code,
+          message,
+          data,
         };
       }),
     );
