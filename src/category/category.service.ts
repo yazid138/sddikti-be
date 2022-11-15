@@ -31,8 +31,9 @@ export class CategoryService {
           data = await this.prismaService.categoryOnApi.create({
             data: {
               category: {
-                create: {
-                  name,
+                connectOrCreate: {
+                  create: { name },
+                  where: { name },
                 },
               },
               api: {
